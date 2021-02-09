@@ -1,6 +1,6 @@
 ---
 - name:add administrator account & configure policies and NAT
-  hosts: firewall
+  hosts: localhost
   connection:local
   gather_facts:no
   roles:
