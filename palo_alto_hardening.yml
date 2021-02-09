@@ -1,0 +1,39 @@
+---
+- name:add administrator account & configure policies and NAT
+  hosts: firewall
+  connection:local
+  gather_facts:no
+  roles:
+    - role: PaloAltoNetworks.paloaltonetworks
+  vars:
+   provider:
+      ip_address: '{{ inventory_hostname }}'
+      username: admin
+      password: '{{admin_password }}'
+    
+  tasks:
+  #include ansible-vault password for hosts
+  - name: include vault password variables
+    include_vars: vars.yml
+    no_log: yes
+    
+    
+    #create username
+   -name: configure user1 administrator
+    panos_administrator:
+       provider: '{{provider }}'
+       admin_username: 'user1'
+       admin_password: '{{user1_password}}'
+       superuser_read_only:true
+       commit: false
+       no_log: yes
+    #check if ready
+   -name: check if ready
+    panos_check:
+        provider: '{{provider}}'
+        timeout: 0
+       
+       #commit
+   -name: commit condidate configure
+    panos_commit:
+        provider: '{{provider}}'
