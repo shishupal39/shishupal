@@ -30,8 +30,8 @@
 - hosts: localhost
   connection: local
 
-  roles:
-    - role: PaloAltoNetworks.paloaltonetworks
+  #roles:
+   # - role: PaloAltoNetworks.paloaltonetworks
 
   tasks: 
     - name: include variables (free-form)
