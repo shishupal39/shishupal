@@ -1,0 +1,56 @@
+---
+- name: add administrator account & configure policies and NAT
+  hosts: firewall
+  connection: local
+  gather_facts: no
+  roles:
+  - role : PaloAltoNetworks.paloaltonetworks
+  vars:
+   provider:
+      ip_address: '{{ inventory_hostname }}'
+      username: admin
+      password: '{{admin_password }}'
+    
+  tasks:
+  #include ansible-vault password for hosts
+  - name: include vault password variables
+    include_vars: vars1.yml
+  - name: set admin password
+    panos_administrator:
+      provider: '{{ provider }}'
+      admin_username: 'admin'
+      admin_password: '{{ provider.password }}'
+      superuser: True
+      commit: False
+
+
+  - name: create DMZ zone on a firewall
+    panos_zone:
+      provider: '{{ provider }}'
+      zone: 'dmz'
+      mode: 'layer3'
+      #zone_profile: 'strict'
+
+  - name: add ethernet1/2 to zone dmz
+    panos_interface:
+      provider: '{{ provider }}'
+      if_name: "ethernet1/2"
+      mode: 'layer3'
+      ip: ['192.168.55.20/24']
+      enable_dhcp: false
+      zone_name: "dmz"
+ 
+    #check if ready
+  - name: check if ready
+    panos_check:
+        provider: '{{provider}}'
+        timeout: 0
+        
+       
+       #commit
+  - name: commit condidate configure
+    panos_commit:
+        provider: '{{provider}}'
+        
+        #ansible-playbook --ask-vault-pass 
+        #ansible-vault edit vars

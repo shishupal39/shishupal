@@ -1,0 +1,10 @@
+
+# vars.yml
+---
+ip_address: '100.100.0.10'
+admin_password: "admin"
+key_name: "/Users/ibojer/.ssh/my_private_key.pem"
+
+
+
+#ansible-playbook -i inventory check_ready.yml -e @firewall.yml
