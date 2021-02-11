@@ -22,8 +22,6 @@
       admin_password: '{{ provider.password }}'
       superuser: True
       commit: False
-
-
 - name: Add the necessary service object to Panorama first
   panos_object:
     provider: '{{ provider }}'
