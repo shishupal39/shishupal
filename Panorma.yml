@@ -33,7 +33,6 @@
     description: 'SSH on port 221'
     commit: false
     device_group: 'DeviceGroupA'
-	commit: False
 	
 - name: Add test pre-rule to Panorama
   panos_security_rule:
@@ -67,7 +66,7 @@
     dnat_address: '10.0.1.101'
     dnat_port: '22'
     device_group: 'DeviceGroupA'
-	commit: False
+    commit: False
     #check if ready
   - name: check if ready
     panos_check:
