@@ -50,8 +50,7 @@
     hip_profiles: ['any']
     action: 'allow'
     device_group: 'DeviceGroupA'
-    commit: False
-	
+    commit: False	
 - name: Create dynamic NAT rule on Panorama
   panos_nat_rule:
     provider: '{{ provider }}'
@@ -68,8 +67,8 @@
     device_group: 'DeviceGroupA'
     commit: False
     #check if ready
-  - name: check if ready
-    panos_check:
+ - name: check if ready
+   panos_check:
         provider: '{{provider}}'
         timeout: 0       
  - name: commit candidate configs on panorama
