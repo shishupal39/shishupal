@@ -1,5 +1,5 @@
 ---
-- name: add administrator account & configure policies and NAT
+- name: create object and firewall policy in Panorma
   hosts: firewall
   connection: local
   gather_facts: no
@@ -73,9 +73,14 @@
     panos_check:
         provider: '{{provider}}'
         timeout: 0       
-  - name: commit condidate configure
-    panos_commit:
-        provider: '{{provider}}'
+ - name: commit candidate configs on panorama
+   panos_commit_panorama:
+       provider: '{{ provider }}'
+- name: commit specific device group changes on panorama
+  panos_commit_panorama:
+      provider: '{{ provider }}'
+      device_groups: ['DeviceGroupA']
+       
         
         #ansible-playbook --ask-vault-pass 
         #ansible-vault edit vars
